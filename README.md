@@ -91,10 +91,15 @@ spec:
         - containerPort: 8080
 ```
 ![alt text](https://github.com/VN351/kube-03/raw/main/images/1-2.jpg)
+
 2. После запуска увеличить количество реплик работающего приложения до 2.
+
 3. Продемонстрировать количество подов до и после масштабирования.
+
 ![alt text](https://github.com/VN351/kube-03/raw/main/images/1-3.jpg)
+
 4. Создать Service, который обеспечит доступ до реплик приложений из п.1.
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -108,6 +113,7 @@ spec:
     port: 80
     targetPort: 80
 ```
+
 5. Создать отдельный Pod с приложением multitool и убедиться с помощью `curl`, что из пода есть доступ до приложений из п.1.
 
 ```yaml
@@ -121,7 +127,9 @@ spec:
     image: wbitt/network-multitool
     command: ["/bin/sh", "-c", "sleep 3600"]
 ```
+
 ![alt text](https://github.com/VN351/kube-03/raw/main/images/1-4.jpg)
+
 ![alt text](https://github.com/VN351/kube-03/raw/main/images/1-5.jpg)
 
 ------
@@ -133,7 +141,9 @@ spec:
 ## Решение
 
 1. Создать Deployment приложения nginx и обеспечить старт контейнера только после того, как будет запущен сервис этого приложения.
+
 nginx-wait-service-deployment.yaml
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -159,9 +169,13 @@ spec:
         ports:
         - containerPort: 80
 ```
+
 2. Убедиться, что nginx не стартует. В качестве Init-контейнера взять busybox.
+
 ![alt text](https://github.com/VN351/kube-03/raw/main/images/2-1.jpg)
+
 3. Создать и запустить Service. Убедиться, что Init запустился.
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -175,7 +189,9 @@ spec:
     port: 80
     targetPort: 80
 ```
+
 4. Продемонстрировать состояние пода до и после запуска сервиса.
+
 ![alt text](https://github.com/VN351/kube-03/raw/main/images/2-2.jpg)
 ------
 
